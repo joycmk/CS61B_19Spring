@@ -1,6 +1,14 @@
 package es.datastructur.synthesizer;
 
 //Note: This file will not compile until you complete task 1 (BoundedQueue).
+
+import edu.princeton.cs.algs4.StdAudio;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class GuitarString {
     /** Constants. Do not change. In case you're curious, the keyword final
      * means the values cannot be changed at runtime. */
@@ -9,6 +17,7 @@ public class GuitarString {
 
     /* Buffer for storing sound data. */
     private BoundedQueue<Double> buffer;
+    private int capacity;
 
     /* Create a guitar string of the given frequency.  */
     public GuitarString(double frequency) {
@@ -16,6 +25,9 @@ public class GuitarString {
         //       cast the result of this division operation into an int. For
         //       better accuracy, use the Math.round() function before casting.
         //       Your buffer should be initially filled with zeros.
+        capacity = (int) (SR/frequency);
+        buffer = new ArrayRingBuffer<Double>(capacity);
+        pluck();
     }
 
 
@@ -27,6 +39,19 @@ public class GuitarString {
         //
         //       Make sure that your random numbers are different from each
         //       other.
+
+        while (buffer.fillCount() != 0) {
+            buffer.dequeue();
+        }
+
+        List<Double> list = new ArrayList<Double>();
+        while (!buffer.isFull()){
+            double r = Math.random() - 0.5;
+            if(!list.contains(r)){
+                buffer.enqueue(r);
+            }
+            list.add(r);
+        }
     }
 
     /* Advance the simulation one time step by performing one iteration of
@@ -36,12 +61,16 @@ public class GuitarString {
         // TODO: Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
+        double first = buffer.dequeue();
+        double second = buffer.peek();
+        buffer.enqueue(DECAY * 0.5 * (first + second));
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
         // TODO: Return the correct thing.
-        return 0;
+        return buffer.peek();
     }
+
 }
     // TODO: Remove all comments that say TODO when you're done.
