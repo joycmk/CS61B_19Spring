@@ -251,12 +251,10 @@ public class BST<Key extends Comparable<Key>> {
         return TotalDepth(root);
     }
     public int TotalDepth(Node x) {
-        int depth = 0;
         if (x == null ) {
             return 0;
         }
-        depth = TotalDepth(x.left) + TotalDepth(x.right);
-        return depth;
+        return TotalDepth(x.left) + TotalDepth(x.right) + size(x) - 1;
     }
 
     public double AverageDepth() {

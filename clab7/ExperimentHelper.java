@@ -1,6 +1,9 @@
+import java.util.Random;
+
 /**
  * Created by hug.
  */
+
 public class ExperimentHelper {
 
     /** Returns the internal path length for an optimum binary search tree of
@@ -37,5 +40,17 @@ public class ExperimentHelper {
     public static double optimalAverageDepth(int N) {
 
         return ((double)optimalIPL(N))/ (double)N;
+    }
+
+    public static BST BST_Delete_AS (BST bst,Random r,int times) {
+        bst.deleteTakingSuccessor(bst.getRandomKey());
+        bst.add(r.nextInt(times));
+        return bst;
+    }
+
+    public static BST BST_Delete_S (BST bst,Random r,int times) {
+        bst.deleteTakingRandom(bst.getRandomKey());
+        bst.add(r.nextInt(times));
+        return bst;
     }
 }
