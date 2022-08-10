@@ -94,9 +94,9 @@ public class TestMyHashMap {
         assertTrue(keySet.containsAll(values));
     }
 
-    /*
-     * Test for general functionality and that the properties of Maps hold.
-     */
+
+     //* Test for general functionality and that the properties of Maps hold.
+
     @Test
     public void functionalityTest() {
         MyHashMap<String, String> dictionary = new MyHashMap<>();
@@ -117,6 +117,8 @@ public class TestMyHashMap {
         MyHashMap<String, Integer> studentIDs = new MyHashMap<String, Integer>();
         studentIDs.put("sarah", 12345);
         assertEquals(1, studentIDs.size());
+
+
         assertEquals(12345, studentIDs.get("sarah").intValue());
         studentIDs.put("alan", 345);
         assertEquals(2, studentIDs.size());
@@ -139,6 +141,7 @@ public class TestMyHashMap {
         assertEquals(345, studentIDs.get("evil alan").intValue());
         assertEquals(studentIDs.get("evil alan"), studentIDs.get("alan"));
     }
+
 
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestMyHashMap.class);
