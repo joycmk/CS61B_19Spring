@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 /**
  * Represents a flight in the Flight problem.
  */
@@ -24,4 +26,5 @@ public class Flight {
     public int passengers() {
         return passengers;
     }
+
 }

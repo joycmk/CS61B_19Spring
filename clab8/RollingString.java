@@ -17,12 +17,29 @@ class RollingString{
      */
     static final int PRIMEBASE = 6113;
 
+    private StringBuilder current_str;
+
+    private int check_length;
+
+    private int currnet_hash;
+
+    private int exp;
+
     /**
      * Initializes a RollingString with a current value of String s.
      * s must be the same length as the maximum length.
      */
     public RollingString(String s, int length) {
         assert(s.length() == length);
+        this.current_str = new StringBuilder(s);
+        check_length = length;
+        currnet_hash = hash();
+
+        exp = 1;
+
+        for (int i = 1; i < check_length ; i++) {
+            exp = Math.floorMod((UNIQUECHARS * exp) , PRIMEBASE);
+        }
         /* FIX ME */
     }
 
@@ -32,7 +49,11 @@ class RollingString{
      * Should be a constant-time operation.
      */
     public void addChar(char c) {
-        /* FIX ME */
+        char delete_char = current_str.charAt(0);
+        current_str.append(c);
+        current_str.delete(0,1);
+        currnet_hash = Math.floorMod(currnet_hash + PRIMEBASE - Math.floorMod(exp * delete_char, PRIMEBASE),PRIMEBASE);
+        currnet_hash = Math.floorMod(currnet_hash * UNIQUECHARS + (int) c,PRIMEBASE);
     }
 
 
@@ -42,9 +63,8 @@ class RollingString{
      * the string.
      */
     public String toString() {
-        StringBuilder strb = new StringBuilder();
         /* FIX ME */
-        return "";
+        return current_str.toString();
     }
 
     /**
@@ -53,7 +73,7 @@ class RollingString{
      */
     public int length() {
         /* FIX ME */
-        return -1;
+        return check_length;
     }
 
 
@@ -65,7 +85,29 @@ class RollingString{
     @Override
     public boolean equals(Object o) {
         /* FIX ME */
+        if (o == null) {
+            return false;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+        RollingString other = (RollingString) o;
+        if (current_str.equals(other.current_str) &&
+                check_length == other.check_length && currnet_hash == other.currnet_hash) {
+            return true;
+        }
         return false;
+    }
+
+    /*initialize hashcode*
+     */
+
+    public int hash() {
+        int h = 0;
+        for (int i=0 ; i<check_length ; i++) {
+            h = Math.floorMod((UNIQUECHARS * h + (int)current_str.charAt(i)),PRIMEBASE);
+        }
+        return h;
     }
 
     /**
@@ -75,6 +117,6 @@ class RollingString{
     @Override
     public int hashCode() {
         /* FIX ME */
-        return -1;
+        return currnet_hash;
     }
 }
