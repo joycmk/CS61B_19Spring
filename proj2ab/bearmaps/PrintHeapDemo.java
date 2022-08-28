@@ -66,5 +66,17 @@ public class PrintHeapDemo {
         Integer[] example = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
         printSimpleHeapDrawing(example);
         printFancyHeapDrawing(example);
+
+        ArrayHeapMinPQ<Integer> my_example = new ArrayHeapMinPQ<>();
+        for (int i=1;i<30;i++) {
+            my_example.add(i,i);
+        }
+
+        printFancyHeapDrawing(my_example.print_out());
+
+        my_example.removeSmallest();
+        printFancyHeapDrawing(my_example.print_out());
+
+
     }
 }
