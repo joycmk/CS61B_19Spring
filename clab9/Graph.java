@@ -10,6 +10,7 @@ public class Graph {
 
     private Map<String, Node> nodes;
 
+
     public Graph() {
         nodes = new HashMap<>();
     }
@@ -61,14 +62,47 @@ public class Graph {
         return toReturn;
     }
 
+    public boolean hascycle() {
+        String[] lables=  labels().toArray(new String[labels().size()]);
+
+        for (int i = 0; i < lables.length ; i++) {
+            Node start = nodes.get(lables[i]);
+            if (!start.visited) {
+                if(hascycle(start,null)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean hascycle(Node start, Node parent) {
+        start.visited = true;
+        for (Node neibor : start.getNeighbors()) {
+            if (neibor != parent) {
+                if (neibor.visited) {
+                    return true;
+                } else {
+                    if (hascycle(neibor,start)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     class Node {
         private String label;
 
         private Set<Node> neighbors;
 
+        private boolean visited;
+
         Node(String label) {
             this.label = label;
             neighbors = new HashSet<>();
+            visited = false;
         }
 
         void addNeighbor(Node neighbor) {

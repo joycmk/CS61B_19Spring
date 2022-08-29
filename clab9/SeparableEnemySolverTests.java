@@ -40,7 +40,7 @@ public class SeparableEnemySolverTests {
     @Test
     public void input1() throws FileNotFoundException {
         SeparableEnemySolver solver = new SeparableEnemySolver("input/party1");
-        assertEquals(true, solver.isSeparable());
+        assertEquals(false, solver.isSeparable());
     }
 
     @Test

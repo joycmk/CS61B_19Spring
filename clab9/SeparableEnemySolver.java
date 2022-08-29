@@ -23,9 +23,17 @@ public class SeparableEnemySolver {
      * Returns true if input is separable, false otherwise.
      */
     public boolean isSeparable() {
-        // TODO: Fix me
-        return false;
+        //if there is cycle in graph, is not separable
+        if (g.hascycle()) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
+
+
+
 
 
     /* HELPERS FOR READING IN CSV FILES. */
