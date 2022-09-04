@@ -42,8 +42,14 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
-        // Your code here!
-        return null;
+        Queue<Queue<Item>> result = new Queue<>();
+        for (int i=0; i < items.size(); i++) {
+            Queue<Item> temp_queue = new Queue<>();
+            Item temp = items.dequeue();
+            temp_queue.enqueue(temp);
+            result.enqueue(temp_queue);
+        }
+        return result;
     }
 
     /**
@@ -62,7 +68,21 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
-        return null;
+        if (q2 == null) {
+            return q1;
+        }
+
+        if (q1 == null) {
+            return q2;
+        }
+
+        Queue<Item> result = new Queue<>();
+
+        while (!(q1.isEmpty() && q2.isEmpty())) {
+            Item temp = getMin(q1,q2);
+            result.enqueue(temp);
+        }
+        return result;
     }
 
     /**
@@ -77,7 +97,27 @@ public class MergeSort {
      */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
+
+        Queue<Queue<Item>> single_queue = makeSingleItemQueues(items);
+        Queue<Queue<Item>> result = new Queue<>();
+
+        while (single_queue.size()>1) {
+            while (!single_queue.isEmpty()) {
+                Queue<Item> first = single_queue.dequeue();
+                Queue<Item> second = new Queue<>();
+                if (single_queue.isEmpty()) {
+                    second = null;
+                } else {
+                    second = single_queue.dequeue();
+                }
+                result.enqueue(mergeSortedQueues(first, second));
+            }
+            single_queue = result;
+            result = new Queue<>();
+        }
+
+
         // Your code here!
-        return items;
+        return single_queue.peek();
     }
 }
